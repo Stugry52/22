@@ -140,6 +140,8 @@ class Inventory(val capacity: Int = 20){
     fun findItem(itemId: String): InventorySlot? {
         return slots.find { it.item?.id == itemId }
     }
+
+    //ага
 }
 
 
