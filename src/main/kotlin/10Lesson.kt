@@ -98,6 +98,73 @@ open class Character(val name: String, var health: Int, val attack: Int){
     }
 }
 
+// Класс квест
+class Quest(
+    val id: String,
+    val name: String,
+    val description: String,
+    val requiredItemId: String? = null, // ID предмета необходимого для выполнения квеста (может быть null - тд не требовать)
+    val rewardGold: Int = 0,
+    val rewardItem: Item? = null
+){
+    var isCompleted: Boolean = false
+    var isActive: Boolean = false
+
+    fun checkCompletion(player: Player): Boolean{
+        if (!isCompleted && isActive){
+            // если квест требует предмет проверяем его наличие у игрока
+            if (requiredItemId != null && player.inventory.hasItem(requiredItemId)){
+                completeQuest(player)
+                return true
+            }
+        }
+        return false
+    }
+
+    private fun completeQuest(player: Player){
+        isCompleted = true
+        isActive = false
+
+        println("\n*** КВЕСТ $name ВЫПОЛНЕН ***")
+        println("Награда: ")
+
+        if (rewardGold > 0){
+            println("- Золото: $rewardGold")
+            // В реальной игре тут будет добавление золота нашему игроку
+        }
+
+        if (rewardItem != null){
+            println("- Предмет: ${rewardItem.name}")
+            player.inventory.addItem(rewardItem)
+        }
+    }
+
+    fun displayInfo(){
+        val status = when{
+            isCompleted -> "Выполнен"
+            isActive -> "Активен"
+            else -> "Не активен"
+        }
+        println("[$status] $name: $description")
+    }
+}
+
+class QuestManager{
+    // mutableMapOf<String, Quest>() - создаем изменяемый словарь с квестами, где:
+    // String - типом данных ключа (id квеста)
+    // Quest - тип значения (объект Квеста)
+    private val quests = mutableMapOf<String, Quest>()
+
+    fun addQuest(quest: Quest){
+        // quests[quest.id] = quest - добавляет в словарь по ключу quest.id
+        quests[quest.id] = quest
+    }
+
+    fun getQuest(questId: String): Quest? {
+        return quests[questId]
+    }
+}
+
 class Player(
     name: String,
     health: Int,
@@ -183,7 +250,7 @@ fun main(){
         println("Вы можете похилиться у вас есть зелье здровье: ${player.inventory.countItems("health_potion")} штук(а)")
     }
 
-    
+
 }
 
 
