@@ -20,7 +20,7 @@ class Item(
 
 class Inventory{
     // mutableListOf<Item>() - создает пустой изменяймый список в который можно положить только предметы (Item)
-    // private - оозначает, что доступ к списку предметов, есть только внутри класса инвенторя
+    // private - означает, что доступ к списку предметов, есть только внутри класса инвенторя
     private val items = mutableListOf<Item>()
 
     fun addItem(item: Item){
@@ -206,6 +206,16 @@ fun main(){
             println("${player.name} востанавливает 30HP!")
         }
     )
+    val apple = Item(
+        "apple",
+        "Не простое яблоко",
+        "Восстанавливает 10HP",
+        10,
+        {player ->
+            player.health += 10
+            println("${player.name} востанавливает 10HP!")
+        }
+    )
     val strenghtPotion = Item(
         "strenght_potion",
         "Зелье силы",
@@ -232,6 +242,9 @@ fun main(){
     player.pickUpItem(strenghtPotion)
     player.pickUpItem(oldKey)
     player.pickUpItem(healthPotion)
+    player.pickUpItem(apple)
+    player.pickUpItem(apple)
+    player.pickUpItem(apple)
 
     player.showInventory()
 
@@ -249,6 +262,10 @@ fun main(){
     if (player.inventory.hasItem("health_potion")){
         println("Вы можете похилиться у вас есть зелье здровье: ${player.inventory.countItems("health_potion")} штук(а)")
     }
+    if (player.inventory.hasItem("apple")){
+        println("Вы можете подкрепится у вас есть яблоки: ${player.inventory.countItems("apple")} штук(а)")
+    }
+
 
 
 }
