@@ -244,7 +244,8 @@ class NPC(val name: String, val description: String){
 class Player(
     name: String,
     health: Int,
-    attack: Int
+    attack: Int,
+    var gold: Int,
 ): Character(name, health, attack){
     val inventory = Inventory()
 
@@ -294,7 +295,7 @@ class Shop(val name: String, val description: String){
             println("Выберите действие: ")
             when(readln().toIntOrNull() ?: 0){
                 1 -> showItemsForSale(player)
-                2 -> showBuyMenu(player)
+                //2 -> showBuyMenu(player)
                 3 -> {
                     shopping = false
                     println("Вы покидаете магазин.")
@@ -323,9 +324,15 @@ class Shop(val name: String, val description: String){
             val price = itemsForSale[selectedItem] ?: 0
 
             // ДЗ Реализовать проверку золота у игрока (хватает или нет)
-            println("Вы покупаете ${selectedItem.name} за $price золотых")
-            player.inventory.addItem(selectedItem)
-            // ДЗ Здесь вычесть у него золотые
+            if (player.gold < price){
+                println("У вас не достаточно золота для покупки")
+            }else{
+                println("Вы покупаете ${selectedItem.name} за $price золотых")
+                player.inventory.addItem(selectedItem)
+                // ДЗ Здесь вычесть у него золотые
+                player.gold -= price
+            }
+
         }
     }
 }
@@ -406,7 +413,7 @@ fun main(){
 //    }
     println(" === Система Квестов и NPC ===")
 
-    val player = Player("Олег", 100, 15)
+    val player = Player("Олег", 100, 15, 100)
 
     // Предметы для квестов (создание)
     val mysteryHerb = Item(
