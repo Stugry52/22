@@ -378,7 +378,7 @@ class Shop(val name: String, val description: String){
             val price = buyPrices[selectedItem.id] ?: 0
             println("Вы продаете: ${selectedItem.name} за $price золотых")
             player.inventory.removeItem(choice - 1)
-            // Реализация добавления золота игроку на prics
+            // Реализация добавления золота игроку на price
             player.gold += price
         }
     }
