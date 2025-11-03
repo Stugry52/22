@@ -117,7 +117,13 @@ class RobustSaveSystem{
                 }
             }
             data
-        }// Сделать перехватчик исключений на то, верный ли формат файла сохранения
+        }catch (e: SecurityException){
+            println("Mismatch permissions for this file: $filename")
+            null
+        }catch (e: IOException){
+            println("Cannot read file: '$filename' - ${e.message}")
+            null
+        }  // Сделать перехватчик исключений на то, верный ли формат файла сохранения
 
     }
 }
