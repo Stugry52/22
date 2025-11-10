@@ -40,7 +40,11 @@ abstract class GameSystem(val systemName: String, protected val logger: GameLogg
             logger.debug("$systemName: Начало операции $operation")
             val result = block() // Выполняем переданный блок кода
             logger.debug("$systemName: Операции $operation завершена успешно")
+            return result
             // вернуть результат работы
+        }catch (e: Error){
+            println("ERROR: Can't end operation")
+            return null
         } // сделать catch исключения с выводом лог-строк с уровнем error и вернуть null
     }
 }
