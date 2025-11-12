@@ -17,7 +17,7 @@ class SafeFileManager{
             }
             file.readText() // Прочитатьв виде текста содержимое файла
         }catch (e: SecurityException){
-            // Нет прав  на чтение файла
+            // Нет прав на чтение файла
             println("Mismatch permissions for this file: $filename")
             null
         }catch (e: IOException){

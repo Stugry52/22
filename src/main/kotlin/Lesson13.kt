@@ -161,10 +161,16 @@ class InventorySystem(logger: GameLogger): GameSystem("InventorySystem", logger)
     }
 
     override fun emergencyShutdown() {
-        // Логирование warn экстренного отключения системы инвенторя
+        logger.warn("Аварийное завершение системы боя")
+         // Логирование warn экстренного отключения системы инвенторя
+
         // Сохранение состояния инвенторя перед отключением
         // Создание бэкап-списка - использовать метод joinToString("\n")
+        val backUpItems = items.joinToString("\n")
         // Используя метод File в аттрибут которого мы кладем "название_файла-бэкапа .txt" + записать в файл созданный бэкап - writeText(бэкап-список)
+        val fileBackUp = File("$backUpItems .txt")
+        fileBackUp.writeText( backUpItems)
         // Проверка на инициализацию должна стать false
+        isInitialized = false
     }
 }
