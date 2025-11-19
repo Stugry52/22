@@ -11,6 +11,7 @@ class GameCharacter(val name: String){
     // Флаги для управления состояниями
     var canAttack = true
     var isUnderEffect = true
+    var isHealEffect = true
 
     // Список активных корутин для управления ими
     private val activeJobs = mutableListOf<Job>()
@@ -64,7 +65,7 @@ class GameCharacter(val name: String){
         println("$name: отравлен! Здоровье будет уменьшаться в течении ${duration/1000} секунд")
 
         val startTime = System.currentTimeMillis()
-        val  endTime = startTime + duration
+        val endTime = startTime + duration
 
         while (System.currentTimeMillis() < endTime && isAlive){
             delay(1000L) // Урон каждую секунду
@@ -85,5 +86,28 @@ class GameCharacter(val name: String){
         isUnderEffect = false
     }
     // suspend функции, которая симулирует эффект лечение (постепенное восстановление)
-    
+    suspend fun applyHealEffect(duration: Long = 5000L, healPerTick: Int = 5){
+        if (isHealEffect) return
+        isHealEffect = true
+
+        println("$name: получает лечение! Здоровье будет увеличиваться в течении ${duration/1000} секунд")
+
+        val startTime = System.currentTimeMillis()
+        val endTime = startTime + duration
+
+        while (System.currentTimeMillis() < endTime && isAlive){
+            delay(1000L) 
+            health += healPerTick
+
+            println("$name получает лечение! +$healPerTick HP, Текущее HP $health")
+
+            if (health >= 100){
+                health = 100
+                println("Вы исцелены")
+                break
+            }
+        }
+        isHealEffect = false
+    }
+
 }
