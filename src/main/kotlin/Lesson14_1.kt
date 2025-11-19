@@ -96,7 +96,7 @@ class GameCharacter(val name: String){
         val endTime = startTime + duration
 
         while (System.currentTimeMillis() < endTime && isAlive){
-            delay(1000L) 
+            delay(1000L)
             health += healPerTick
 
             println("$name получает лечение! +$healPerTick HP, Текущее HP $health")
