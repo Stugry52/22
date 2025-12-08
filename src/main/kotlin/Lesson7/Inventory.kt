@@ -63,20 +63,24 @@ class Inventory{
         weightNow = currentWeight
         return currentWeight
     }
-    fun findItemByName(name: String) Item? {
+    fun findItemByName(name: String): Item? {
         for (item in items){
-            if (name == item.name){
+            if ( name == item.name){
                 println("Предмет найден: ${item.name}")
-                return name
-                break
-            }else{
-                println("Предмет не найден")
-                return null
+                return item
             }
         }
-
+        println("Предмет не найден")
+        return null
     }
     fun findItemById(itemId: Int): Item? {
-        return items.find { it.id == itemId }
+        for (item in items){
+            if ( itemId == item.id){
+                println("Предмет найден: ${item.name}")
+                return item
+            }
+        }
+        println("Предмет не найден")
+        return null
     }
 }

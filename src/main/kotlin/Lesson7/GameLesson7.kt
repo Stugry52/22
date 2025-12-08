@@ -52,7 +52,7 @@ fun main(){
     println("Содержимое инвентаря после подбирания предмета")
     player.inventory.printInventory()
 
-    player.inventory.removeItem(sword)
+
 
     println("Содержимое инвентаря после удаления предмета")
 
@@ -73,4 +73,6 @@ fun main(){
     // Сделай похожий метод findItemById(id: Int): Item?
 
     // В main: попробуй найти предмет по имени. Если найдешь - выведи его описание
+    player.inventory.findItemByName("Яблоко")
+    player.inventory.findItemById(1)
  }
