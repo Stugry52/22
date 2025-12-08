@@ -1,7 +1,6 @@
-import kotlin.random.Random
+package old_money
+
 import kotlinx.coroutines.*
-import kotlin.system.measureTimeMillis
-import kotlin.time.Duration
 
 class GameCharacter(val name: String){
     var health = 100

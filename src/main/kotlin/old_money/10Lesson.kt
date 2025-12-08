@@ -1,4 +1,4 @@
-//import kotlin.contracts.Effect
+package old_money//import kotlin.contracts.Effect
 //import kotlin.random.Random
 //
 //class Item(
@@ -423,7 +423,7 @@
 //    }
 //}
 //
-//fun main(){
+//fun old_money.main(){
 ////    println("=== Система Инвенторя Inventory ===")
 ////
 ////    val player = Player("Олег", 100, 15)

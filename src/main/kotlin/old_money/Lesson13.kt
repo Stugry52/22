@@ -1,4 +1,5 @@
-import jdk.dynalink.Operation
+package old_money
+
 import java.io.File
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -71,7 +72,7 @@ abstract class GameSystem(val systemName: String, protected val logger: GameLogg
 }
 
 // Система боя с обработкой ошибок
-class CombatSystem(logger: GameLogger) : GameSystem("CombatSystem", logger){
+class CombatSystem(logger: GameLogger) : GameSystem("old_money.CombatSystem", logger){
     private var isInitialized = false
 
     override fun initialize(): Boolean {
@@ -113,7 +114,7 @@ class CombatSystem(logger: GameLogger) : GameSystem("CombatSystem", logger){
     }
 }
 
-class InventorySystem(logger: GameLogger): GameSystem("InventorySystem", logger){
+class InventorySystem(logger: GameLogger): GameSystem("old_money.InventorySystem", logger){
     private val items = mutableListOf<String>()
     private var isInitialized = false
 

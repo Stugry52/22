@@ -1,4 +1,4 @@
-//import kotlin.random.Random
+package old_money//import kotlin.random.Random
 //import com.sun.jdi.Value
 //
 //// Улучшенный класс Item с разными типами предметов

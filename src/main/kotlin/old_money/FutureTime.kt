@@ -1,4 +1,4 @@
-//import kotlinx.coroutines.* // Импорт библиотеки корутин (* - значит импорт все)
+package old_money//import kotlinx.coroutines.* // Импорт библиотеки корутин (* - значит импорт все)
 //import kotlin.system.measureTimeMillis // Функция измерения времени выполнения
 //import kotlin.time.Duration
 //import kotlin.time.DurationUnit

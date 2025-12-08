@@ -72,7 +72,7 @@ fun main(){
     // Если не находит - возвращает null
     // Сделай похожий метод findItemById(id: Int): Item?
 
-    // В main: попробуй найти предмет по имени. Если найдешь - выведи его описание
+    // В old_money.main: попробуй найти предмет по имени. Если найдешь - выведи его описание
     player.inventory.findItemByName("Яблоко")
     player.inventory.findItemById(1)
  }
