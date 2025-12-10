@@ -38,6 +38,7 @@ class Inventory(
                     slot.quantity += toAdd
                     // Увеличиваем число предметов в слоте
                     remaining -= toAdd
+
                     // Уменьшаем число предметов, которые ещё не положены в инвентарь (ждут своего часа расплаты над Денисом)
 
                     println(" + Добавление ч$toAdd предметов ${item.name} в существующий слот. Теперь в слоте: ${slot.quantity}")
@@ -126,6 +127,6 @@ class Inventory(
     }
 
 //    fun getTotalCountOf(item: Item): Int{
-//        totalCount =
+//        totalCount = item.id.
 //    }
 }
