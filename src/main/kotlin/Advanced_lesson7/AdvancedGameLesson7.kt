@@ -56,6 +56,7 @@ fun main(){
     player.inventory.addItem(potion, 50)
 
     player.inventory.printInventory()
+    player.inventory.getTotalCountOf(potion)
 
 }
 

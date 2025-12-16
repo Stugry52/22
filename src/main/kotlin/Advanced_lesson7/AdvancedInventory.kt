@@ -126,7 +126,12 @@ class Inventory(
         }
     }
 
-//    fun getTotalCountOf(item: Item): Int{
-//        totalCount = item.id.
-//    }
+    fun getTotalCountOf(item: Item): Int{
+        var totalCount = 0
+        for ((index, slot) in slots.withIndex()){
+            totalCount += slot.quantity
+        }
+        println(totalCount)
+        return totalCount
+    }
 }
