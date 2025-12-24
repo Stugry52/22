@@ -19,6 +19,8 @@ class GameCharacter(
 
     var canAttack: Boolean = true
 
+    var attackBonus: Int = 0
+
     // создание ссылки на корутину, чтобы можно было из вызывать или отменять(прервать) по необходимости
     // Job? - это "работа" корутины, на работу моно ссылаться, отменять, проверять ее выполнение и тд. (Процесс)
     private var manaRegenJob: Job? = null
@@ -27,6 +29,7 @@ class GameCharacter(
     private var potionJob: Job? = null
     // null - значит что при создании ссылки - она пока пустая
     // Корутина, которая будет обрабатывать получение урона от яда, и время сколько ещё яд будет действовать
+    private var attackBonusJob: Job? = null
 
     fun printStatus(){
         println("=== Статус сущности: $name ===")
@@ -46,7 +49,7 @@ class GameCharacter(
             return
         }
 
-        val damage = baseAttack
+        val damage = baseAttack + attackBonus
         // К основному урону будем добавлять криты, баффы, эффекты и тд
 
         println("$name атакует ${target.name} и наносит $damage урона")
@@ -95,6 +98,7 @@ class GameCharacter(
         amountPerTick: Int, // Сколько маны восстановится за один тик
         intervalMillis: Long // Интервал между тем, как часто будет регенерироваться (вызываться 1 тик)
     ){
+        isAlive()
         // Проверка, если мана уже регенерирует - перезапустить корутину
         if (manaRegenJob != null){
             println("[$] Мана уже регенерирует, перезапускаем.......")
@@ -139,44 +143,101 @@ class GameCharacter(
     // Создать метод отмены корутины регенерации маны
 
     fun stopManaRegeneration(){
-        if (currentMan >= maxMan){
-            println("[*] Мана полностью восстановлена")
+        if (manaRegenJob == null){
+            println("[!] Регенерация не начиналась, чтобы её останавливать")
             return
         }
+
+        manaRegenJob?.cancel()
+        // Завершение корутины регенерации
+
+        println("[!]Регенерация маны прекращена")
+        manaRegenJob = null
+
     }
 
-    fun potionTickDamage(
+    fun applyPotionEffect(
         damage: Int,
         amountTick: Int,
         intervalMillis: Long
     ){
+        isAlive()
         if (potionJob != null){
             println("[$] Яд уже наложен, перезапускаем.......")
             potionJob?.cancel()
         }
 
-        var timeJobPotion = amountTick
-
         potionJob = GlobalScope.launch {
-            println("[*] Вы отравлены")
+            println("[*] $name отравлен")
+
+            var timeJobPotion = amountTick
 
             while (timeJobPotion > 0){
                 delay(intervalMillis)
 
-                println("-$damage")
-                currentHealth -= damage
-
                 if (currentHealth <= 0){
-                    timeJobPotion = 0
+                    currentHealth = 0
                     println("$name помер от яда")
+                    break
                 }
+
+                println("-$damage")
+                takeDamage(damage)
 
                 timeJobPotion -= 1
-                if (timeJobPotion == 0){
-                    println("Отравление закончилось")
-                }
             }
+            println("Отравление закончилось")
+
             println("[&] Корутина отравления - закончила работу")
         }
+    }
+
+    fun clearPotion(){
+        if(potionJob == null){
+            println("[!] Эффект яда на $name не наложен")
+            return
+        }
+
+        potionJob?.cancel()
+        println("Эффект яда на $name очищен")
+        potionJob = null
+    }
+
+    fun applyAttackBuff(
+        bonus: Int,
+        durationMillis: Long
+    ){
+        isAlive()
+        if (attackBonus!= null){
+            println("[$] Бонус урон наложен, перезапускаем.......")
+            attackBonusJob?.cancel()
+        }
+
+        attackBonusJob = GlobalScope.launch {
+            println("Работает бафф на урон")
+            attackBonus += bonus
+
+            delay(durationMillis)
+
+            println("Бафф силы на $name закончился")
+            attackBonus -= bonus
+
+        }
+        attackBonusJob = null
+    }
+
+    fun isAlive(){
+        if (currentHealth <= 0) {
+            println("Применение не возможно")
+            return
+        }
+    }
+
+    fun stopCorutinies(){
+        attackBonusJob?.cancel()
+        attackBonusJob = null
+        clearPotion()
+        stopManaRegeneration()
+
     }
 }
