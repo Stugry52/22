@@ -155,20 +155,28 @@ class GameCharacter(
             potionJob?.cancel()
         }
 
+        var timeJobPotion = amountTick
+
         potionJob = GlobalScope.launch {
             println("[*] Вы отравлены")
 
-            while (true){
+            while (timeJobPotion > 0){
                 delay(intervalMillis)
 
+                println("-$damage")
                 currentHealth -= damage
 
                 if (currentHealth <= 0){
+                    timeJobPotion = 0
+                    println("$name помер от яда")
+                }
 
+                timeJobPotion -= 1
+                if (timeJobPotion == 0){
+                    println("Отравление закончилось")
                 }
             }
+            println("[&] Корутина отравления - закончила работу")
         }
     }
-    // Отнимать тики каждую итерацию цикла
-    // Каждую итерацию цикла 
 }
