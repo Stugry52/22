@@ -1,13 +1,19 @@
 package Lesson11
 
-class QuestSystem {
+class QuestSystem{
     // Флаги
-    private var questStarted: Boolean = false
-    private var stepTalked: Boolean = false
-    private var stepKilled: Boolean = false
-    private var stepReportedBack: Boolean = false
-
+    data class QuestProgressState(
+        // Флаги
+         var questStarted: Boolean = false,
+         var stepTalked: Boolean = false,
+         var stepKilled: Boolean = false,
+         var stepReportedBack: Boolean = false,
+         var questCompleted: Boolean = false
+    )
+    
     private val questId = "ultra_mega_pro_quest_001"
+
+    private val progressbyPlayer: MutableMap<String, QuestProgressState> = mutableMapOf()
 
     fun register(){
         EventBus.subscribe { event ->
