@@ -79,4 +79,12 @@ sealed class GameEvent{
         val guestId: String,
         val stepId: String
     ) : GameEvent()
+
+    // Событие изменения состояния
+    data class NpcStateChanged(
+        val playerId: String,
+        val npcName: String,
+        val oldState: String,
+        val newState: String
+    )
 }
