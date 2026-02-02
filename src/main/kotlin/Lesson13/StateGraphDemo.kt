@@ -1,5 +1,8 @@
 package Lesson13
 
+import Lesson11.EventBus
+import Lesson11.GameEvent
+
 // State - состояние
 // Event - события
 // Graph - граф (карта всех возможных переходов между состояниями)
@@ -33,4 +36,28 @@ package Lesson13
 // Сохраняем каждому игроку его текущий узел - События просто будут двигать игрока по его графу
 // Событие это выбор конкретного диалога, убийство конкретного npc
 
+fun main(){
+    val system = TrainingStateSystem()
+    val player = "Oleg"
 
+    EventBus.post(GameEvent.DialogueStarted("Тренер", player, player))
+    EventBus.processQueue()
+
+    EventBus.post(GameEvent.DialogueStarted("Тренер", player, player))
+    EventBus.processQueue()
+
+    EventBus.post(GameEvent.DialogueChoiceSelected("Тренер", player, player, "accept"))
+    EventBus.processQueue()
+
+    EventBus.post(GameEvent.DialogueChoiceSelected("Тренер", player, player, "refuse"))
+    EventBus.processQueue()
+
+    EventBus.post(GameEvent.CharacterDied("Макан", player, player))
+    EventBus.processQueue()
+
+    EventBus.post(GameEvent.DialogueChoiceSelected("Тренер", player, player, "finish"))
+    EventBus.processQueue()
+
+
+
+}
