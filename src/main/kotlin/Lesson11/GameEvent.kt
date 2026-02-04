@@ -87,4 +87,10 @@ sealed class GameEvent(open val playerId: String){
         val oldState: String,
         val newState: String
     ) : GameEvent(playerId)
+
+    data class StateChanged(
+        override val playerId: String,
+        val oldState: String,
+        val newState: String
+    ) : GameEvent(playerId)
 }

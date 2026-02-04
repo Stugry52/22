@@ -38,6 +38,7 @@ import Lesson11.GameEvent
 
 fun main(){
     val system = TrainingStateSystem()
+    system.register()
     val player = "Oleg"
 
     EventBus.post(GameEvent.DialogueStarted("Тренер", player, player))

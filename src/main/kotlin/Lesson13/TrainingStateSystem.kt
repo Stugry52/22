@@ -14,6 +14,9 @@ class TrainingStateSystem{
                 is GameEvent.CharacterDied -> {
                     progress.handleEvent(event.playerId, event)
                 }
+//                is GameEvent.StateChanged -> {
+//                    progress.handleEvent(event.playerId, event)
+//                }
                 else -> {}
             }
         }
